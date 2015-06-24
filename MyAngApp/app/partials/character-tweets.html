@@ -1,9 +1,8 @@
-
-<div ng-repeat="mention in mentions">
-  <div ng-if="character == mention.character">
+<h1>{{character}}</h1>
+  <div ng-repeat="tweetObject in tweetObjects">
     <ul class="phone-thumbs">
       <li>
-          <h1>{{mention.user}}</h1>
-          <p>{{mention.tweet}}</p>
+        <h3>{{tweetObject.screen_name}}</h3>
+        <p>{{tweetObject.text}}</p>
       </li>
     </ul>

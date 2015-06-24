@@ -18,9 +18,9 @@
     </div>
 
     <ul class="mentions">
-      <li class="list-animations" ng-repeat="character in ['Don','Peggy','Joan','Betty'] | filter:query">
-        <a href="#/mentions/{{character}}" class="thumb"><img style="max-height:101px; max-width:100px" ng-src="img/cast/mad-men-1024x768.jpg"/></a>
-        <a href="#/mentions/{{character}}">{{character}}</a>
+      <li class="list-animations" ng-repeat="c in characterData | filter:query">
+        <a href="#/mentions/{{c.name}}/{{c.sn}}" class="thumb"><img style="max-height:101px; max-width:100px" ng-src="img/cast/mad-men-1024x768.jpg"/></a>
+        <a href="#/mentions/{{c.name}}/{{c.sn}}">{{c.name}}</a>
       </li>
     </ul>
 

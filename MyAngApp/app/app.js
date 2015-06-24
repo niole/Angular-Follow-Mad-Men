@@ -18,7 +18,7 @@ MadMenApp.config(['$routeProvider',
         templateUrl: 'partials/character-list.html',
         controller: 'MadMenCtrl'
       }).
-      when('/mentions/:character', {
+      when('/mentions/:name/:sn', {
         templateUrl: 'partials/character-tweets.html',
         controller: 'CharacterTweetCtrl'
       }).
