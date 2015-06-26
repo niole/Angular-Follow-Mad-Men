@@ -22,7 +22,7 @@ MadMenAppControllers.controller('MadMenCtrl', ['$scope', '$http',
 
         $scope.setTweet= function(i) {
           if ( i === data.length ) {
-            i = 0;
+            i = 1;
           }
 
           $scope.index = i;
@@ -39,11 +39,43 @@ MadMenAppControllers.controller('MadMenCtrl', ['$scope', '$http',
 MadMenAppControllers.controller('CharacterTweetCtrl', ['$http', '$scope', '$routeParams',
   function($http, $scope, $routeParams) {
       $scope.character = $routeParams.name;
-      $http.post('/streams/gettimeline/'+$routeParams.sn).success(
 
+      $http.post('/streams/gettimeline/'+$routeParams.sn).success(
         function(data) {
-        console.log('CLIENT return tweet Data');
-        $scope.tweetObjects = data;
+          $scope.tweetObjects = data;
+          var avgFavs = 0;
+          var avgRetweets = 0;
+          data.forEach( function(obj) {
+            avgFavs += obj.favorite_count;
+            avgRetweets += obj.retweet_count;
+          });
+          $scope.startDate = data[0].created_at;
+          $scope.endDate = data[data.length-1].created_at;
+          $scope.avgFavs = avgFavs/(data.length);
+          $scope.avgRetweets = avgRetweets/(data.length);
+          $scope.numFollowers = data[0].user.followers_count;
+          $scope.numFriends = data[0].user.friends_count;
+
+          var ePs = [];
+          $scope.pickEndPt= function(i,data) {
+            ePs.push(i);
+            if ( ePs.length === 2 ) {
+              var start = Math.min(ePs[0],ePs[1]);
+              var end = Math.max(ePs[0],ePs[1]);
+              for ( i=start; i<end; i++ ) {
+                avgFavs += data[i].favorite_count;
+                avgRetweets += data[i].retweet_count;
+              }
+
+              $scope.startDate = data[start].created_at;
+              $scope.endDate = data[end].created_at;
+              $scope.avgFavs = avgFavs/(end-start);
+              $scope.avgRetweets = avgRetweets/(end-start);
+            }
+            if ( ePs.length > 2 ) {
+              ePs = [i];
+            }
+          };
       }).
        error(function(data, status, headers, config) {
         console.log('error');

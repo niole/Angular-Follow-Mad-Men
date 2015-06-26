@@ -1,8 +1,79 @@
-<h1>{{character}}</h1>
-  <div ng-repeat="tweetObject in tweetObjects">
-    <ul class="phone-thumbs">
-      <li>
-        <h3>{{tweetObject.screen_name}}</h3>
-        <p>{{tweetObject.text}}</p>
-      </li>
-    </ul>
+<h1 class="container-fluid" id="sn">{{character}}</h1>
+
+<div class="tweet-container">
+  <div class="tweet-box container-fluid" ng-repeat="tweetObject in tweetObjects">
+    <table>
+      <tr>
+        <td class="tweet-avatar">
+          <img ng-src="{{tweetObject.user.profile_image_url}}"/>
+        </td>
+        <td>
+          <table>
+            <tr><td><h3>{{tweetObject.user.screen_name}}</h3></td></tr>
+            <tr><td><p class="user-name">{{tweetObject.user.name}}</p></td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <table>
+      <tr><td><p>{{tweetObject.text}}</p></td></tr>
+      <tr><td><p>{{tweetObject.created_at}}</p></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="side-bar">
+  <table id="averages-table">
+    <tr>
+      <td>
+        <p id="title">averages</p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Range:
+      </td>
+      <td>
+        {{startDate}}
+      </td>
+      <td>
+        {{endDate}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Average Favorites Per Tweet:
+      </td>
+      <td>
+        {{avgFavs}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Average Retweets Per Tweet:
+      </td>
+      <td>
+        {{avgRetweets}}
+      </td>
+    </tr>
+   </table>
+</div>
+
+
+
+<div ng-repeat="(key,tweetObject) in tweetObjects">
+  <table class="table-pop-out">
+    <tr>
+      <td>
+        <div class="tweet-box timeline-button" ng-click=pickEndPt(key,tweetObjects) ng-mouseleave="showDate=!showDate" ng-mouseenter="showDate=!showDate" ng-init="showDate=false"/div>
+      </td>
+      <td>
+        <div class="pop-out-date" ng-class="{ 'hidden': ! showDate }">
+          <p class="time-line-date">{{tweetObject.created_at.split(" ")[1]+tweetObject.created_at.split(" ")[2]+tweetObject.created_at.split(" ")[5]+tweetObject.created_at.split(" ")[3]}}</p>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
