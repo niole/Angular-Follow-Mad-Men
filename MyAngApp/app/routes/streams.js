@@ -11,8 +11,6 @@ var client = new Twitter({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-console.log('inside streams.js');
-
 router.post('/gettimeline/:NAME', function(req,res) {
   var params = { screen_name: req.params.NAME };
   client.get('statuses/user_timeline', params, function(error, tweets, response){

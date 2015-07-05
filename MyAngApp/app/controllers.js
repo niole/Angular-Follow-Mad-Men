@@ -13,24 +13,20 @@ MadMenAppControllers.controller('MadMenCtrl', ['$scope', '$http',
         {'name':'Joan','sn':'joan_holloway'},
         {'name':'Betty','sn':'bettydraper'}];
 
-      $http.post('/streams/gettimeline/PeggyOlsonMCWW').success(
-        function(data) {
-
-        $scope.index = 0;
-        $scope.mentions = data;
-        $scope.displayTweet = data[0].text;
-
-        $scope.setTweet= function(i) {
-          if ( i === data.length ) {
-            i = 1;
-          }
-
-          $scope.index = i;
-          $scope.displayTweet = data[i].text;
-
-        };
-      }).
-       error(function(data, status, headers, config) {
+        var post = $http.post('/streams/gettimeline/PeggyOlsonMCWW');
+        post.success(function(data) {
+          $scope.index = 0;
+          $scope.mentions = data;
+          $scope.displayTweet = data[0].text;
+          $scope.setTweet= function(i) {
+            if ( i === data.length ) {
+              i = 1;
+            }
+            $scope.index = i;
+            $scope.displayTweet = data[i].text;
+          };
+        });
+       post.error(function(data, status, headers, config) {
         console.log('error');
         console.log(data);
       });
@@ -40,7 +36,8 @@ MadMenAppControllers.controller('CharacterTweetCtrl', ['$http', '$scope', '$rout
   function($http, $scope, $routeParams) {
       $scope.character = $routeParams.name;
 
-      $http.post('/streams/gettimeline/'+$routeParams.sn).success(
+      var post = $http.post('/streams/gettimeline/'+$routeParams.sn);
+      post.success(
         function(data) {
           $scope.tweetObjects = data;
           var avgFavs = 0;
@@ -76,8 +73,8 @@ MadMenAppControllers.controller('CharacterTweetCtrl', ['$http', '$scope', '$rout
               ePs = [i];
             }
           };
-      }).
-       error(function(data, status, headers, config) {
+      });
+      post.error(function(data, status, headers, config) {
         console.log('error');
         console.log(data);
       });
